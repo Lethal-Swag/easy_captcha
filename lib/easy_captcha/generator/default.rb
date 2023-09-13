@@ -133,7 +133,7 @@ module EasyCaptcha
           data
       end
 
-      def self.draw_text!(text, image)
+      def draw_text!(text, image)
         draw = Magick::Draw.new
   
         draw.annotate(image, image.columns, image.rows, 0, 0, text) {
