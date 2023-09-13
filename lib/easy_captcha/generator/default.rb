@@ -31,7 +31,7 @@ module EasyCaptcha
       attr_accessor :font_size, :font_fill_color, :font, :font_family, :font_stroke, :font_stroke_color
 
       # Background
-      attr_accessor :image_background_color, :background_image
+      attr_accessor :image_background_color, :background_image, :background_color
 
       # Sketch
       attr_accessor :sketch, :sketch_radius, :sketch_sigma
