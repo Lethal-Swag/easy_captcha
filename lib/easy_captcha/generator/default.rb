@@ -116,6 +116,7 @@ module EasyCaptcha
       # end
 
       def generate(code)
+        require 'rmagick' unless defined?(Magick)
           image = create_image(EasyCaptcha.image_width, EasyCaptcha.image_height)
           draw_text(code, image)
           data = image.to_blob
