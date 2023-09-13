@@ -117,28 +117,48 @@ module EasyCaptcha
 
       def generate(code)
         require 'rmagick' unless defined?(Magick)
-          width = 200
-          height = 50
+          width = EasyCaptcha.image_width
+          height = EasyCaptcha.image_height
           font_size = 36
-          config = self
-          # image = Magick::Image.new(width, height) do
-          #   self.background_color = 'white'
-          # end
-          canvas = Magick::Image.new(EasyCaptcha.image_width, EasyCaptcha.image_height) do
-            self.background_color = 'white'
-          end
-
-          canvas.annotate(Magick::Draw.new, 0, 0, 0, 0, code) do
-            self.gravity = Magick::CenterGravity
-            self.fill = 'black'
-            self.font = @font  # Replace with a valid font file path
-            self.pointsize = font_size
-          end
           
-          image = canvas.to_blob { self.format = "TIF" }
+          image = Magick::Image.new(width, height)
+          image.format = "jpg"
+          image.gravity = Magick::CenterGravity
+          image.background_color = 'white'
+          draw_text!(code, image)
+          # image = apply_distortion!(image)
 
-          Rails.logger.info(" =============    #{self}, #{canvas}, #{image}")
-          image
+          data = image.to_blob
+          image.destroy!
+      end
+
+      def self.draw_text!(text, image)
+        draw = Magick::Draw.new
+  
+        draw.annotate(image, image.columns, image.rows, 0, 0, text) {
+          self.gravity = Magick::CenterGravity
+          self.pointsize = 22
+          self.fill = 'darkblue'
+          self.stroke = 'transparent'
+        }
+  
+        nil
+      end
+
+      def self.apply_distortion!(image)
+        image = image.wave *random_wave_distortion
+        image = image.implode random_implode_distortion
+        image = image.swirl rand(10)
+        image = image.add_noise Magick::ImpulseNoise
+        image
+      end
+  
+      def self.random_wave_distortion
+        [4 + rand(2), 40 + rand(20)]
+      end
+  
+      def self.random_implode_distortion
+        (2 + rand(2)) / 10.0
       end
 
     end
