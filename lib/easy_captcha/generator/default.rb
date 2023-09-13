@@ -104,15 +104,16 @@ module EasyCaptcha
           background = Magick::Image.read(config.background_image).first
           background.composite!(canvas, Magick::CenterGravity, Magick::OverCompositeOp)
 
-          image = background.to_blob { self.format = 'PNG' }
+          image = background.to_blob { self.format = MagickFormat.Png }
         else
-          image = canvas.to_blob { self.format = 'PNG' }
+          image = canvas.to_blob { self.format = MagickFormat.Png }
         end
 
         # ruby-1.9
         image = image.force_encoding 'UTF-8' if image.respond_to? :force_encoding
 
         canvas.destroy!
+        Rails.logger.info("Image -> #{image}")
         image
       end
 
