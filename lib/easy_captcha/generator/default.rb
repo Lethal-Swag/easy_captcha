@@ -62,6 +62,7 @@ module EasyCaptcha
 
         config = self
         canvas = Magick::Image.new(EasyCaptcha.image_width, EasyCaptcha.image_height) do |variable|
+          Rails.logger.info("captcha config  #{config}")
           self.background_color = config.image_background_color unless config.image_background_color.nil?
           self.background_color = 'none' if config.background_image.present?
         end
