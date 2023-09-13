@@ -121,19 +121,23 @@ module EasyCaptcha
           height = 50
           font_size = 36
           config = self
-          image = Magick::Image.new(width, height) do
+          # image = Magick::Image.new(width, height) do
+          #   self.background_color = 'white'
+          # end
+          canvas = Magick::Image.new(EasyCaptcha.image_width, EasyCaptcha.image_height) do
             self.background_color = 'white'
           end
 
-          draw = Magick::Draw.new
-
-          draw.annotate(image, 0, 0, 0, 0, code) do
+          canvas.annotate(Magick::Draw.new, 0, 0, 0, 0, code) do
             self.gravity = Magick::CenterGravity
             self.fill = 'black'
             self.font = @font  # Replace with a valid font file path
-            self.pointsize = font_size                                
+            self.pointsize = font_size
           end
+          
+          image = canvas.to_blob { self.format = "PNG" }
 
+          Rails.logger.info(" =============    #{self}, #{canvas}, #{image}")
           image
       end
 
