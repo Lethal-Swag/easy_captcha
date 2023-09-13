@@ -130,6 +130,7 @@ module EasyCaptcha
 
           data = image.to_blob
           image.destroy!
+          data
       end
 
       def self.draw_text!(text, image)
