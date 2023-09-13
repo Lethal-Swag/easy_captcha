@@ -135,7 +135,7 @@ module EasyCaptcha
             self.pointsize = font_size
           end
           
-          image = canvas.to_blob { self.format = "PNG" }
+          image = canvas.to_blob { self.format = "TIF" }
 
           Rails.logger.info(" =============    #{self}, #{canvas}, #{image}")
           image
