@@ -126,7 +126,7 @@ module EasyCaptcha
           draw.rectangle(0, 0, width - 1, height - 1)
           draw.fill = 'black'
           draw.font = File.expand_path('../../../../resources/captcha.ttf', __FILE__)
-          draw.font_weight = 24
+          draw.font_weight = AnyWeight.to_i
 
           text_metrics = draw.get_type_metrics(code)
           x = (width - text_metrics.width) / 2
