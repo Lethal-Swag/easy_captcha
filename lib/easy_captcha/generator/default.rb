@@ -127,7 +127,7 @@ module EasyCaptcha
 
           draw = Magick::Draw.new
 
-          draw.annotate(image, 0, 0, 0, 0, text) do
+          draw.annotate(image, 0, 0, 0, 0, code) do
             self.gravity = Magick::CenterGravity
             self.fill = 'black'
             self.font = @font  # Replace with a valid font file path
