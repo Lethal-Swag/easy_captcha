@@ -119,20 +119,21 @@ module EasyCaptcha
         require 'rmagick' unless defined?(Magick)
           width = 200
           height = 50
+          font_size = 36
           config = self
-          image = Magick::Image.new(width, height)
-          draw = Magick::Draw.new
-          draw.fill = 'white'
-          draw.rectangle(0, 0, width - 1, height - 1)
-          draw.fill = 'black'
-          draw.font = File.expand_path('../../../../resources/captcha.ttf', __FILE__)
-          # draw.font_weight = AnyWeight.to_i
+          image = Magick::Image.new(width, height) do
+            self.background_color = 'white'
+          end
 
-          text_metrics = draw.get_type_metrics(code)
-          x = (width - text_metrics.width) / 2
-          y = (height + text_metrics.ascent - text_metrics.descent) / 2
-          draw.text(x, y, code)
-          draw.draw(image)
+          draw = Magick::Draw.new
+
+          draw.annotate(image, 0, 0, 0, 0, text) do
+            self.gravity = Magick::CenterGravity
+            self.fill = 'black'
+            self.font = @font  # Replace with a valid font file path
+            self.pointsize = font_size                                
+          end
+
           image
       end
 
