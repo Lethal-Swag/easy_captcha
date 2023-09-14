@@ -58,7 +58,7 @@ module EasyCaptcha
       end
 
       #generate image
-      def geenerate(code)
+      def generate(code)
         require 'rmagick' unless defined?(Magick)
 
         config = self
@@ -103,9 +103,9 @@ module EasyCaptcha
           background = Magick::Image.read(config.background_image).first
           background.composite!(canvas, Magick::CenterGravity, Magick::OverCompositeOp)
 
-          image = background.to_blob { self.format = MagickFormat.Png }
+          image = background.to_blob
         else
-          image = canvas.to_blob { self.format = MagickFormat.Png }
+          image = canvas.to_blob 
         end
 
         # ruby-1.9
@@ -115,7 +115,7 @@ module EasyCaptcha
         image
       end
 
-      def generate(code)
+      def geenerate(code)
         require 'rmagick' unless defined?(Magick)
           width = EasyCaptcha.image_width
           height = EasyCaptcha.image_height
@@ -145,7 +145,7 @@ module EasyCaptcha
           self.pointsize = 22
           self.fill = 'darkblue'
           self.stroke = 'black'
-          self.font = File.expand_path('../../../../resources/captcha.ttf', __FILE__)
+          self.font = File.expand_path('../../../../resources/captcha.ttf')
           self.background_color = 'red'
         }
         
