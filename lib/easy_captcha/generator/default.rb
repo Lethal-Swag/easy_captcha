@@ -145,6 +145,7 @@ module EasyCaptcha
           self.pointsize = 22
           self.fill = 'darkblue'
           self.stroke = 'black'
+          self.font = File.expand_path('../../../../resources/captcha.ttf', __FILE__)
           self.background_color = 'red'
         }
         
