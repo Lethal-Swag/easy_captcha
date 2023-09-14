@@ -66,6 +66,7 @@ module EasyCaptcha
           self.background_color = config.image_background_color unless config.image_background_color.nil?
           self.background_color = 'none' if config.background_image.present?
         end
+        canvas.format = 'JPEG'
 
         # Render the text in the image
         canvas.annotate(Magick::Draw.new, 0, 0, 0, 0, code) {
