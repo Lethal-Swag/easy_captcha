@@ -126,11 +126,14 @@ module EasyCaptcha
           image.gravity = Magick::CenterGravity
           image.background_color = 'white'
           draw_text!(code, image)
-          image = apply_distortion!(image)
+          # image = apply_distortion!(image)
 
           data = image.to_blob
           data = data.force_encoding 'UTF-8' if data.respond_to? :force_encoding rescue nil
-          Rails.logger.info("data -> #{data}")
+          Magick::SupportedFormats.each do |format|
+            Rails.logger.info("#{format}")
+          end          
+          Rails.logger.info("self, code and data -> #{self}, #{code}, #{image}")
           image.destroy!
           data
       end
@@ -142,27 +145,27 @@ module EasyCaptcha
           self.gravity = Magick::CenterGravity
           self.pointsize = 22
           self.fill = 'darkblue'
-          self.stroke = 'transparent'
+          self.stroke = 'black'
         }
   
         nil
       end
 
-      def apply_distortion!(image)
-        image = image.wave *random_wave_distortion
-        image = image.implode random_implode_distortion
-        image = image.swirl rand(10)
-        image = image.add_noise Magick::ImpulseNoise
-        image
-      end
+      # def apply_distortion!(image)
+      #   image = image.wave *random_wave_distortion
+      #   image = image.implode random_implode_distortion
+      #   image = image.swirl rand(10)
+      #   image = image.add_noise Magick::ImpulseNoise
+      #   image
+      # end
   
-      def random_wave_distortion
-        [4 + rand(2), 40 + rand(20)]
-      end
+      # def random_wave_distortion
+      #   [4 + rand(2), 40 + rand(20)]
+      # end
   
-      def random_implode_distortion
-        (2 + rand(2)) / 10.0
-      end
+      # def random_implode_distortion
+      #   (2 + rand(2)) / 10.0
+      # end
 
     end
   end
