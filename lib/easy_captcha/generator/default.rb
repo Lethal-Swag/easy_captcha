@@ -148,7 +148,7 @@ module EasyCaptcha
           self.background_color = 'red'
         }
         
-        puts " col, rows -> #{image.columns}, #{image.rows}"
+        Rails.logger.info(" col, rows -> #{image.columns}, #{image.rows}")
         nil
       end
 
