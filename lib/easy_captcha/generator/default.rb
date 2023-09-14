@@ -122,7 +122,7 @@ module EasyCaptcha
           font_size = 36
           
           image = Magick::Image.new(width, height)
-          image.format = "jpg"
+          image.format = "JPEG"
           image.gravity = Magick::CenterGravity
           image.background_color = 'white'
           draw_text!(code, image)
@@ -130,9 +130,7 @@ module EasyCaptcha
 
           data = image.to_blob
           data = data.force_encoding 'UTF-8' if data.respond_to? :force_encoding rescue nil
-          Magick::SupportedFormats.each do |format|
-            Rails.logger.info("#{format}")
-          end          
+        
           Rails.logger.info("self, code and data -> #{self}, #{code}, #{image}")
           image.destroy!
           data
