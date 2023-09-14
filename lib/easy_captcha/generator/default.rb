@@ -124,14 +124,15 @@ module EasyCaptcha
           image = Magick::Image.new(width, height)
           image.format = "JPEG"
           image.gravity = Magick::CenterGravity
-          image.background_color = 'white'
+          image.background_color = 'black'
           draw_text!(code, image)
           # image = apply_distortion!(image)
 
           data = image.to_blob
           data = data.force_encoding 'UTF-8' if data.respond_to? :force_encoding rescue nil
         
-          Rails.logger.info("self, code and data -> #{self}, #{code}, #{image}")
+          Rails.logger.info("self, code and data -> #{self}, #{code}, #{image}, #{image.format}")
+          image.write('output.jpg')
           image.destroy!
           data
       end
