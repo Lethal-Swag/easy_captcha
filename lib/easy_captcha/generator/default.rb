@@ -140,7 +140,7 @@ module EasyCaptcha
       def draw_text!(text, image)
         draw = Magick::Draw.new
   
-        draw.annotate(image, image.columns, image.rows, 0, 0, text) {
+        draw.annotate(image, 0, 0, 0, 0, text) {
           self.gravity = Magick::CenterGravity
           self.pointsize = 22
           self.fill = 'darkblue'
@@ -148,7 +148,6 @@ module EasyCaptcha
           self.background_color = 'red'
         }
         
-        Rails.logger.info(" col, rows -> #{image.columns}, #{image.rows}")
         nil
       end
 
