@@ -145,8 +145,10 @@ module EasyCaptcha
           self.pointsize = 22
           self.fill = 'darkblue'
           self.stroke = 'black'
+          self.background_color = 'red'
         }
-  
+        
+        puts " col, rows -> #{image.columns}, #{image.rows}"
         nil
       end
 
